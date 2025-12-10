@@ -1,0 +1,82 @@
+<!-- quiz.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz — Cidades do Brasil</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .quiz-container { max-width: 600px; margin: auto; }
+    .questao { font-size: 1.2em; margin-bottom: 15px; }
+    .opcoes button { display: block; margin: 8px 0; padding: 10px; width: 100%; }
+    .resultado { margin-top: 20px; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz: Cidades do Brasil</h1>
+    <div id="quiz">
+      <!-- Pergunta será injetada aqui -->
+    </div>
+  </div>
+  <script>
+    const perguntas = [
+      {
+        pergunta: "Qual é a capital do estado do Paraná?",
+        opcoes: ["Curitiba", "Porto Alegre", "Florianópolis", "São Paulo"],
+        correta: "Curitiba"
+      },
+      {
+        pergunta: "Em que estado fica a cidade de Salvador?",
+        opcoes: ["Bahia", "Pernambuco", "Ceará", "Rio de Janeiro"],
+        correta: "Bahia"
+      },
+      {
+        pergunta: "Qual dessas cidades é capital do Brasil?",
+        opcoes: ["Rio de Janeiro", "São Paulo", "Brasília", "Belo Horizonte"],
+        correta: "Brasília"
+      },
+      {
+        pergunta: "Em que estado está a cidade de Manaus?",
+        opcoes: ["Amazonas", "Pará", "Rondônia", "Roraima"],
+        correta: "Amazonas"
+      },
+      {
+        pergunta: "Qual dessas cidades NÃO é capital de estado?",
+        opcoes: ["Campinas", "Aracaju", "Vitória", "Maceió"],
+        correta: "Campinas"
+      }
+    ];
+
+    let indiceQuestao = 0;
+    let pontos = 0;
+
+    function mostrarQuestao() {
+      if (indiceQuestao >= perguntas.length) {
+        document.getElementById("quiz").innerHTML = `<div class="resultado">Você acertou ${pontos} de ${perguntas.length}!</div>`;
+        return;
+      }
+
+      const q = perguntas[indiceQuestao];
+      const opcoesHtml = q.opcoes.map(op => `<button onclick="responder('${op}')">${op}</button>`).join("");
+      document.getElementById("quiz").innerHTML = `
+        <div class="questao">${q.pergunta}</div>
+        <div class="opcoes">${opcoesHtml}</div>
+      `;
+    }
+
+    function responder(escolha) {
+      const q = perguntas[indiceQuestao];
+      if (escolha === q.correta) {
+        pontos++;
+      }
+      indiceQuestao++;
+      mostrarQuestao();
+    }
+
+    // inicializa
+    mostrarQuestao();
+  </script>
+</body>
+</html>
